@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+    <!-- COMMON TAGS -->
+    <meta charset="utf-8">
+    <title>Important RGPV Alerts - www.rgpvnotes.in</title>
+    <!-- Search Engine -->
+    <meta name="description" content="Receive real-time important alerts and updated about notes, results, syllabus, exam, diploma,pharma, engineering, mca from rgpv.ac.in & rgpvnotes.in">
+    <meta name="image" content="https://cdn.rgpvnotes.in/www/media/rgpvnotes.in%20round%20logo.png">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="RGPV Important Alerts">
+    <meta itemprop="description" content="Receive real-time important alerts and updated about notes, results, syllabus, exam, diploma,pharma, engineering, mca from rgpv.ac.in & rgpvnotes.in">
+    <meta itemprop="image" content="https://cdn.rgpvnotes.in/www/media/rgpvnotes.in%20round%20logo.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="RGPV Important Alerts">
+    <meta name="twitter:description" content="Receive real-time important alerts and updated about notes, results, syllabus, exam, diploma,pharma, engineering, mca from rgpv.ac.in & rgpvnotes.in">
+    <meta name="twitter:site" content="@rgpvnotes_in">
+    <meta name="twitter:creator" content="@rgpvnotes_in">
+    <meta name="twitter:image:src" content="https://cdn.rgpvnotes.in/www/media/rgpvnotes.in%20round%20logo.png">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="RGPV Important Alerts">
+    <meta name="og:description" content="Receive real-time important alerts and updated about notes, results, syllabus, exam, diploma,pharma, engineering, mca from rgpv.ac.in & rgpvnotes.in">
+    <meta name="og:image" content="https://cdn.rgpvnotes.in/www/media/rgpvnotes.in%20round%20logo.png">
+    <meta name="og:url" content="https://www.rgpvnotes.in/">
+    <meta name="og:site_name" content="RGPV Notes">
+    <meta name="og:locale" content="en_IN">
+    <meta name="og:type" content="website">
+    <!-- style  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.rgpvnotes.in/alerts/css/style.css" rel="stylesheet" type="text/css" media="all">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta content="#FF0000" name="theme-color">
+    <!-- Windows Phone -->
+    <meta content="#FF0000" name="msapplication-navbutton-color">
+    <link href="https://cdn.rgpvnotes.in/alerts/media/favicon.png" rel="icon" type="image/x-icon">
+    <meta http-equiv="refresh" content="7"/>
+</head>
+<body class="container">
+  <h1>Receive real-time important alerts and updated about notes, results, syllabus, exam, diploma,pharma, engineering, mca from rgpv.ac.in & rgpvnotes.in</h1>
+    <div id="message"></div>
+
+    <table class="table table-dark table-striped mt-5 text-start">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Date</th>
+          <th scope="col">Content</th>
+          <th scope="col">URL</th>
+        </tr>
+      </thead>
+      <tbody id="news-data">
+
+      </tbody>
+    </table>
+
+</body>
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+    var messagebox = document.getElementById("message");
+
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    // push notification not supported
+    messagebox.innerHTML="Oops!\nYou are on an unsupported browser.\n>Please try different browser. We recommend either using Chrome or Firefox.";
+    messagebox.style.color = "red";
+  }
+
+  // Let's check whether notification permissions have already been granted
+  else if (Notification.permission === "granted") {
+    // push notification allowed
+    window.location.href = "https://rgpvnotes.in/social-media.html";
+  }
+
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== "denied") {
+    //ask permission
+    messagebox.innerHTML="<img src='https://cdn.rgpvnotes.in/www/media/services/alerts.png' alt='RGPV Important Alerts' title='RGPV Important Alerts' /> <h3>Congratulations! Your browser is supported.</h3>To receive important notifications from <b>www.rgpvnotes.in</b>. just follow 2 steps.\n\n<p>Step 1: Click On Get Notifaction</p><p>Step 2: Click on \"Allow\" & wait a second.</p>\n\n<div class='onesignal-customlink-container'></div>";
+        //onegignal code
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+            appId: "2dd382e4-0d95-4eed-a7f2-56494c55ee47",
+            });
+        });
+
+
+
+  }else if (Notification.permission === "denied") {
+    messagebox.innerHTML="<h2>Booo!!</h2> You have blocked the notification,\n either clear your browser data & cache and try again or follow these steps.\n\n<br><br> <img src='https://cdn.rgpvnotes.in/alerts/media/blocked.png' alt='enable notification instructions' title='enable notification instructions' />";
+
+            //onegignal code
+            var OneSignal = window.OneSignal || [];
+            OneSignal.push(function() {
+              OneSignal.init({
+              appId: "2dd382e4-0d95-4eed-a7f2-56494c55ee47",
+              });
+          });
+  }
+
+  let finalNews = '', count = 1
+  fetch('https://api.rgpvnotes.in/news')
+  .then(response => response.json())
+  .then(allNews => {
+    for (const  news of allNews) {
+      finalNews = finalNews + `<tr>
+      <th scope="row">${count}</th>
+      <td class="min-width-6">${news.date}</td>
+      <td>${news.content}</td>
+      <td class="min-width-6"><a href="${news.url}" target="_blank" rel="external nofollow noreferrer">Click Here</a></td>
+
+    </tr>`
+    count++
+  }
+  document.getElementById('news-data').innerHTML = finalNews
+  });
+
+
+</script>
+<style>
+  .min-width-6{
+    min-width: 6rem;
+  }
+</style>
+</html>
